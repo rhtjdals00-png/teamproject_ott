@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
     background-color: black;
 }
@@ -24,6 +26,16 @@ h3 {
     height: 100%;
 }
 
+.swiper-slide {
+  transition: all 0.3s ease; /* 부드러운 변화 */
+}
+
+.swiper-slide:hover {
+  /* 마우스 올리면 색상 반전 또는 명도 조절 */
+  filter: brightness(1.2); 
+  transform: translateY(-5%) scale(1); /* 중앙 정렬 유지하며 살짝 커짐 */
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   transition: all 0.3s ease; /* 부드러운 변화 */
@@ -34,7 +46,6 @@ h3 {
   /* 마우스 올리면 색상 반전 또는 명도 조절 */
   filter: brightness(1.2); 
   transform: translateY(-50%) scale(1.1); /* 중앙 정렬 유지하며 살짝 커짐 */
-  
 }
 
 /* 기본 화살표 아이콘 숨기기 */
@@ -58,22 +69,34 @@ h3 {
   background-size: 60px;
 }
 
+.section_slider .swiper-pagination {
+    position: absolute;
+    top: -10px !important;    /* 위에서부터의 거리 */
+    bottom: auto !important;
+    --swiper-theme-color: #ffffff;
+}
+
+.section_slider .swiper-pagination-bullet {
+    width: 5px;
+    height: 5px;
+}
+
 .head_slider .swiper-slide {
     width: 95%;
     text-align: center;
     font-size: 18px;
     background: #444;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
     border-radius: 40px;
 }
+
 
 .head_slider .swiper-slide img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 40px;
 }
 
 .head_slider .swiper-pagination {
@@ -92,15 +115,14 @@ h3 {
 
 .nav_slider {
     width: 100%;
-    height: 104px;
-    background-color: yellow;
+    height: 110px;
     margin: 0 auto;
 }
 
 .nav_slider .swiper-slide {
     width: 237px;
-    text-align: center;
-    font-size: 18px;
+    height: 104px;
+    margin-top: 5px;
     background: orangered;
     display: flex;
     justify-content: center;
@@ -113,60 +135,70 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 18px;
 }
 
 
 .box1 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
+    overflow: visible !important;
 }
 
 .box1 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
+.box1 .rank_num {
+    font-family: "Bangers", system-ui;
+    font-size: 120px;
+    margin-bottom: -10px;
+    margin-right: 20px;   /* 카드와 살짝 겹치는 효과 (유지) */
+    letter-spacing: 0px;
+    color: #ffffff;
+}
 
 .box1 .section_slider .swiper-slide {
-    width: 245px;
+    width: auto;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
-    background: brown;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     border-radius: 8px;
 }
 
 .box1 .section_slider .swiper-slide img {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 245px;
+    height: 355px;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .box2 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
 }
 
 .box2 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
 .box2 .section_slider .swiper-slide {
     width: 245px;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
     background: brown;
@@ -181,25 +213,26 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .box3 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
 }
 
 .box3 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
 .box3 .section_slider .swiper-slide {
     width: 245px;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
     background: brown;
@@ -214,25 +247,26 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .box4 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
 }
 
 .box4 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
 .box4 .section_slider .swiper-slide {
     width: 245px;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
     background: brown;
@@ -247,25 +281,26 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .box5 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
 }
 
 .box5 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
 .box5 .section_slider .swiper-slide {
     width: 245px;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
     background: brown;
@@ -280,25 +315,26 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .box6 {
     width: 100%;
     height: 445px;
-    background-color: violet;
     margin: 0 auto;
 }
 
 .box6 .h3 {
     width: 95%;
-    height: 45px;
-    background-color: orange;
+    height: 35px;
     margin: 0 auto;
 }
 
 .box6 .section_slider .swiper-slide {
     width: 245px;
     height: 355px;
+    margin-top: 20px;
+    padding-top: -15px;
     text-align: center;
     font-size: 18px;
     background: brown;
@@ -313,4 +349,5 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
 }

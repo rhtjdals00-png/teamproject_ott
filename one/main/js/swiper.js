@@ -3,6 +3,7 @@ var swiper = new Swiper(".mySwiper", {
     slidesOffsetAfter: 47,
     slidesOffsetBefore: 47,
     spaceBetween: 10,
+    clickable: true,
     effect: 'coverflow',
     coverflowEffect: {
         rotate: 0,           // 옆으로 넘어갈 때 회전 각도 (0이면 평평함)
@@ -43,6 +44,10 @@ var swiper3 = new Swiper(".mySwiper3", {
         nextEl: ".section_slider .swiper-button-next",
         prevEl: ".section_slider .swiper-button-prev",
     },
+    pagination: {
+        el: ".section_slider .swiper-pagination",
+        clickable: true,
+    },
     slidesPerView: 'auto',
     freeMode: true,
     slidesOffsetAfter: 47,
@@ -54,6 +59,10 @@ var swiper4 = new Swiper(".mySwiper4", {
     navigation: {
         nextEl: ".section_slider .swiper-button-next",
         prevEl: ".section_slider .swiper-button-prev",
+    },
+    pagination: {
+        el: ".section_slider .swiper-pagination",
+        clickable: true,
     },
     slidesPerView: 'auto',
     slidesPerGroup: 7,
