@@ -282,6 +282,7 @@ class Payment(db.Model):
     user_unique_id = db.Column(db.Integer, db.ForeignKey('user.user_unique_id'), nullable=False)
     subscription_id = db.Column(db.Integer, db.ForeignKey('subscription.subscription_id'), nullable=False)
 
+
     # 결제 정보
     price = db.Column(db.Numeric(10, 2))  # 결제 금액
     status = db.Column(db.String(20))  # 결제 상태 (성공, 환불 등)
