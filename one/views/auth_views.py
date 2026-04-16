@@ -223,7 +223,7 @@ def login():
 
             session['user'] = user.user_unique_id
             flash("로그인 성공!")
-            return redirect(url_for('home.index'))
+            return redirect(url_for('home.main'))
         else:
             flash("이메일 또는 비밀번호가 틀렸습니다.")
 
