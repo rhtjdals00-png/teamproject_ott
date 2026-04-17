@@ -1,331 +1,543 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}
+서브페이지
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sub.css') }}">
-    <title>Document</title>
-</head>
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sub.css') }}">
+{% endblock %}
 
-<body>
-    <div id="wrap">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand text-white" href="{{ url_for('home.index')}}"><img class="logo"
-                        src="{{ url_for('static', filename='img/test_logo.png') }}" alt=""></a>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">드라마</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">예능</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">영화</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">애니</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">몰?루</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search" />
-                        <button class="btn btn-outline-secondary" type="submit">Search</button>
-                    </form>
+{% block content %}
+<section>
+    <div class="col-8 h-100 text-white">
+        <div class="header_box">
+            <div class="tv">
+
+            </div>
+            <div class="tv2">
+                <div class="text_box">
+                    <div class="text_mini_box">
+                        <h2>제목-타이틀</h2>
+                        <div class="text_mini_box2">
+                            <p><img src="{{ url_for('static', filename='img/main_img/icon-star-full-v2.svg') }}"
+                                    alt="별">별점 • 장르 • 년도 • 방영시간 • 시즌</p>
+                            <div class="age_box">19+</div>
+                            <div class="display_box">HD</div>
+                        </div>
+                    </div>
+                    <div class="mini_box">
+                        <div class="button_box">
+                            <button class="wish-btn" onclick="toggleWish()">
+                                <img id="wishIcon"
+                                    src="{{url_for('static', filename='img/main_img/icon-heart-outlined.svg')}}"
+                                    alt="찜">
+
+                            </button>&nbsp; &nbsp;
+
+                            <div id="toast1">
+                                <img id="toast1Img" src="{{url_for('static', filename='img/main_img/info.svg')}}"
+                                    alt="정보">
+                                <span id="toast1Text"></span>
+                            </div>
+
+                            <button type="button" class="copy-btn" onclick="copyLink('http://127.0.0.1:5000/sub/sub')">
+                                <img src="{{url_for('static', filename='img/main_img/icon-share-v2.svg')}}"
+                                    alt="링크"></button>
+
+                            <div id="toast">
+                                <img src="{{url_for('static', filename='img/main_img/link.svg')}}" alt="링크2">링크가
+                                복사되었습니다
+                            </div>
+                        </div>
+                        <div class="button_box2"><button>재생하기</button></div>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+        <div class="info">
+            <div class="info_box">시놉시스</div>
+        </div>
     </div>
-    <section>
-        <div class="col-8 vh-100 text-white">
-            <div class="header_box">
-                <div class="tv">
+    <div class="col-4 text-white">
+        <div class="tab">
+            <div class="tab-menu">
+                <button class="tab-link active" onclick="openTab(event, 'tab1')">에피소드</button>
+                <button class="tab-link " onclick="openTab(event, 'tab2')">리뷰</button>
+                <button class="tab-link" onclick="openTab(event, 'tab3')">비슷한 콘텐츠</button>
+            </div>
 
-                </div>
-                <div class="tv2">
-                    <div class="text_box">
-                        <div class="text_mini_box">
-                            <h2>제목-타이틀</h2>
-                            <div class="text_mini_box2">
-                                <p><img src="{{ url_for('static', filename='img/main_img/icon-star-full-v2.svg') }}"
-                                        alt="별">별점 • 장르 • 년도 • 방영시간 • 시즌</p>
-                                <div class="age_box">19+</div>
-                                <div class="display_box">HD</div>
-                            </div>
-                        </div>
-                        <div class="mini_box">
-                            <div class="button_box">
-                                <button class="wish-btn" onclick="toggleWish()">
-                                    <img id="wishIcon"
-                                        src="{{url_for('static', filename='img/main_img/icon-heart-outlined.svg')}}"
-                                        alt="찜"></span>
+            <div id="tab1" class="tab-content active">
+                <div class="head_box" style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
 
-                                </button>&nbsp; &nbsp;
-
-                                <div id="toast1">
-                                    <img id="toast1Img" src="{{url_for('static', filename='img/main_img/info.svg')}}"
-                                        alt="정보">
-                                    <span id="toast1Text"></span>
-                                </div>
-
-                                <button type="button" class="copy-btn"
-                                    onclick="copyLink('http://127.0.0.1:5000/sub/sub')">
-                                    <img src="{{url_for('static', filename='img/main_img/icon-share-v2.svg')}}"
-                                        alt="링크"></button>
-
-                                <div id="toast">
-                                    <img src="{{url_for('static', filename='img/main_img/link.svg')}}" alt="링크2">링크가
-                                    복사되었습니다
-                                </div>
-                            </div>
-                            <div class="button_box2"><button>재생하기</button></div>
+                    <div class="dropdown">
+                        <button type="button" class="dropbtn" onclick="toggleMenu('menu1')">
+                            <span id="text1">전체 시즌</span>
+                            <img src="{{url_for('static', filename='img/main_img/drop_down.svg')}}" alt="▼">
+                        </button>
+                        <div id="menu1" class="dropdown-content">
+                            <button type="button" onclick="updateFilter('season', 'all', '전체 시즌', 'text1', 'menu1')">전체
+                                시즌</button>
+                            <button type="button" onclick="updateFilter('season', '1', '시즌 1', 'text1', 'menu1')">시즌
+                                1</button>
+                            <button type="button" onclick="updateFilter('season', '2', '시즌 2', 'text1', 'menu1')">시즌
+                                2</button>
                         </div>
                     </div>
+
+                    <div class="dropdown">
+                        <button type="button" class="dropbtn" onclick="toggleMenu('menu2')">
+                            <span id="text2">최신 순</span>
+                            <img src="{{url_for('static', filename='img/main_img/drop_down.svg')}}" alt="▼">
+                        </button>
+                        <div id="menu2" class="dropdown-content">
+                            <button type="button" onclick="updateFilter('sort', 'old', '오래된 순', 'text2', 'menu2')">오래된
+                                순</button>
+                            <button type="button" onclick="updateFilter('sort', 'new', '최신 순', 'text2', 'menu2')">최신
+                                순</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-list">
+                    <div class="item" data-season="1" data-sort="old">시즌 1 - 오래된 영상 A</div>
+                    <div class="item" data-season="1" data-sort="new">시즌 1 - 최신 영상 B</div>
+                    <div class="item" data-season="2" data-sort="old">시즌 2 - 오래된 영상 C</div>
+                    <div class="item" data-season="2" data-sort="new">시즌 2 - 최신 영상 D</div>
                 </div>
             </div>
-            <div class="info">
-                <div class="info_box">시놉시스</div>
+            <!-- tab1 에피소드 end -->
+
+            <div id="tab2" class="tab-content">
+                <div class="review-box w-100 d-flex justify-content-between">
+                    <div class="rating1 d-flex align-items-center">
+                        <span class="star fill"></span> <span class="star fill"></span> <span class="star fill"></span>
+                        <span class="star half"></span> <span class="star"></span><span>&nbsp; &nbsp;평점 개수</span>
+                    </div>
+                    <div class="rating2 d-flex align-items-center">3.5</div>
+                </div>
+
+                <div class="comments w-100 d-flex justify-content-center">
+                    <span class="star" data-value="1"></span>
+                    <span class="star" data-value="2"></span>
+                    <span class="star" data-value="3"></span>
+                    <span class="star" data-value="4"></span>
+                    <span class="star" data-value="5"></span>
+                </div>
+
+                <div class="comment-input-wrap">
+                    <input type="text" id="nickname" placeholder="닉네임">
+                    <textarea id="comment-text" placeholder="리뷰 내용을 입력하세요."></textarea>
+                    <button id="submit-btn" type="button">등록</button>
+                </div>
+
+                <div class="review-box2 w-100 d-flex justify-content-end align-items-end">베스트순<img
+                        src="{{url_for('static', filename='img/main_img/drop_down.svg')}}" alt="아래화살"></div>
+
+                <div class="comment-list" id="comment-list"></div>
+
             </div>
-        </div>
-        <div class="col-4 text-white">
-            <div class="tab">
-                <div class="tab-menu">
-                    <button class="tab-link active" onclick="openTab(event, 'tab1')">에피소드</button>
-                    <button class="tab-link " onclick="openTab(event, 'tab2')">리뷰</button>
-                    <button class="tab-link" onclick="openTab(event, 'tab3')">비슷한 콘텐츠</button>
+
+
+
+            <div class="rating3">
+                <div class="user-box1 w-100 d-flex">
+                    <span class="mini_star fill"></span> <span class="mini_star fill"></span>
+                    <span class="mini_star fill"></span><span class="mini_star half"></span> <span
+                        class="mini_star"></span>
                 </div>
+            </div>
 
-                <div id="tab1" class="tab-content active">
-                    <div class="head_box" style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
-
-                        <div class="dropdown">
-                            <button type="button" class="dropbtn" onclick="toggleMenu('menu1')">
-                                <span id="text1">전체 시즌</span>
-                                <img src="{{url_for('static', filename='img/main_img/drop_down.svg')}}" alt="▼">
-                            </button>
-                            <div id="menu1" class="dropdown-content">
-                                <button type="button"
-                                    onclick="updateFilter('season', 'all', '전체 시즌', 'text1', 'menu1')">전체 시즌</button>
-                                <button type="button" onclick="updateFilter('season', '1', '시즌 1', 'text1', 'menu1')">시즌
-                                    1</button>
-                                <button type="button" onclick="updateFilter('season', '2', '시즌 2', 'text1', 'menu1')">시즌
-                                    2</button>
-                            </div>
-                        </div>
-
-                        <div class="dropdown">
-                            <button type="button" class="dropbtn" onclick="toggleMenu('menu2')">
-                                <span id="text2">최신 순</span>
-                                <img src="{{url_for('static', filename='img/main_img/drop_down.svg')}}" alt="▼">
-                            </button>
-                            <div id="menu2" class="dropdown-content">
-                                <button type="button"
-                                    onclick="updateFilter('sort', 'old', '오래된 순', 'text2', 'menu2')">오래된 순</button>
-                                <button type="button" onclick="updateFilter('sort', 'new', '최신 순', 'text2', 'menu2')">최신
-                                    순</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="content-list">
-                        <div class="item" data-season="1" data-sort="old">시즌 1 - 오래된 영상 A</div>
-                        <div class="item" data-season="1" data-sort="new">시즌 1 - 최신 영상 B</div>
-                        <div class="item" data-season="2" data-sort="old">시즌 2 - 오래된 영상 C</div>
-                        <div class="item" data-season="2" data-sort="new">시즌 2 - 최신 영상 D</div>
+            <div id="tab3" class="tab-content">
+            <div class="title-container w-100">
+                <div class="title-box">
+                    <div class="title-thumbnail"></div>
+                    <div class="title-text">
+                        <h5>제목/타이틀</h5>
+                        <p><img src="{{ url_for('static', filename='img/main_img/icon-star-full-v2.svg') }}"
+                                    alt="별">별점 • 장르 • 년도 • 방영시간 • 시즌</p>
                     </div>
                 </div>
-                <!-- tab1 에피소드 end -->
-
-                <div id="tab2" class="tab-content">
-                    <div class="w-100 bg-primary ">
-                        <div class="rating d-flex align-items-center">
-                            <span class="star fill"></span> <span class="star fill"></span> <span class="star fill"></span> <span
-                                class="star half"></span> <span class="star"></span><span>평점</span>
-                        </div>
-                    </div>
-                </div>
-    
-                <div id="tab3" class="tab-content">
-
-                </div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
+                <div class="title-box"></div>
             </div>
         </div>
-
-    </section>
-
-    <script>
-        function openTab(evt, tabName) {
-            // 1. 모든 tab-content 숨기기
-            var tabContent = document.getElementsByClassName("tab-content");
-            for (var i = 0; i < tabContent.length; i++) {
-                tabContent[i].style.display = "none";
-            }
-
-            // 2. 모든 tab-link에서 "active" 클래스 제거
-            var tabLinks = document.getElementsByClassName("tab-link");
-            for (var i = 0; i < tabLinks.length; i++) {
-                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-            }
-
-            // 3. 현재 클릭한 탭 보이게 하고 active 클래스 추가
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-
-        function toggleDropdown(menuId) {
-            const menu = document.getElementById(menuId);
-            const allMenus = document.querySelectorAll('.dropdown-content');
-
-            allMenus.forEach(m => {
-                if (m.id !== menuId) m.classList.remove('show');
-            });
-            menu.classList.toggle('show');
-        }
-
-        // 현재 선택된 필터값 저장
-        let currentFilters = {
-            season: 'all',
-            sort: 'new'
-        };
+        </div>
 
         
+    </div>
+</section>
+<br><br>
+{% endblock %}
 
-        // 드롭다운 열기/닫기
-        function toggleMenu(menuId) {
-            const menus = document.querySelectorAll('.dropdown-content');
-            menus.forEach(m => {
-                if (m.id !== menuId) m.classList.remove('show');
-            });
-            document.getElementById(menuId).classList.toggle('show');
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+<script>
+    function openTab(evt, tabName) {
+        // 1. 모든 tab-content 숨기기
+        var tabContent = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
         }
 
-        // 필터 업데이트 및 적용
-        function updateFilter(type, value, text, labelId, menuId) {
-            // 버튼 텍스트 바꾸고 메뉴 닫기
-            document.getElementById(labelId).innerText = text;
-            document.getElementById(menuId).classList.remove('show');
-
-            // 선택값 저장
-            currentFilters[type] = value;
-
-            // 리스트 새로고침
-            applyFilters();
+        // 2. 모든 tab-link에서 "active" 클래스 제거
+        var tabLinks = document.getElementsByClassName("tab-link");
+        for (var i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
         }
 
-        function applyFilters() {
-            const items = document.querySelectorAll('.item');
+        // 3. 현재 클릭한 탭 보이게 하고 active 클래스 추가
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
 
-            items.forEach(item => {
-                const itemSeason = item.getAttribute('data-season');
-                const itemSort = item.getAttribute('data-sort');
+    function toggleDropdown(menuId) {
+        const menu = document.getElementById(menuId);
+        const allMenus = document.querySelectorAll('.dropdown-content');
 
-                // 필터 조건 체크
-                const seasonMatch = (currentFilters.season === 'all' || currentFilters.season === itemSeason);
-                const sortMatch = (currentFilters.sort === itemSort);
+        allMenus.forEach(m => {
+            if (m.id !== menuId) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
+    }
 
-                // 두 조건이 다 맞아야만 보임
-                if (seasonMatch && sortMatch) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
+    // 현재 선택된 필터값 저장
+    let currentFilters = {
+        season: 'all',
+        sort: 'new'
+    };
 
-        // 처음 실행 시 필터 적용 (초기값 설정)
+    // 드롭다운 열기/닫기
+    function toggleMenu(menuId) {
+        const menus = document.querySelectorAll('.dropdown-content');
+        menus.forEach(m => {
+            if (m.id !== menuId) m.classList.remove('show');
+        });
+        document.getElementById(menuId).classList.toggle('show');
+    }
+
+    // 필터 업데이트 및 적용
+    function updateFilter(type, value, text, labelId, menuId) {
+        // 버튼 텍스트 바꾸고 메뉴 닫기
+        document.getElementById(labelId).innerText = text;
+        document.getElementById(menuId).classList.remove('show');
+
+        // 선택값 저장
+        currentFilters[type] = value;
+
+        // 리스트 새로고침
         applyFilters();
+    }
 
-        // 화면 밖 클릭 시 닫기
-        window.onclick = function (e) {
-            if (!e.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown-content').forEach(m => m.classList.remove('show'));
-            }
-        }
+    function applyFilters() {
+        const items = document.querySelectorAll('.item');
 
-        function copyLink() {
-            // 1. 복사하고 싶은 주소를 여기에 입력하세요.
-            const urlToCopy = "https://www.your-link.com";
+        items.forEach(item => {
+            const itemSeason = item.getAttribute('data-season');
+            const itemSort = item.getAttribute('data-sort');
 
-            // 2. 클립보드로 복사 실행
-            navigator.clipboard.writeText(urlToCopy).then(() => {
-                // 3. 복사 성공 시 토스트 알림 표시
-                const toast = document.getElementById("toast");
-                toast.className = "show";
+            // 필터 조건 체크
+            const seasonMatch = (currentFilters.season === 'all' || currentFilters.season === itemSeason);
+            const sortMatch = (currentFilters.sort === itemSort);
 
-                // 3초 후 토스트 숨기기
-                setTimeout(() => {
-                    toast.className = toast.className.replace("show", "");
-                }, 3000);
-            }).catch(err => {
-                console.error("복사 실패:", err);
-            });
-        }
-
-        const icon = document.getElementById("wishIcon");
-        const toast = document.getElementById("toast1");
-        const toastImg = document.getElementById("toast1Img");
-        const toastText = document.getElementById("toast1Text");
-
-        // 이미지 경로 설정
-        const imgOff = "https://assets.coupangplay.com/assets/icons/icon-heart-outlined.svg"; // 빈 하트
-        const imgOn = "https://assets.coupangplay.com/assets/icons/icon-heart-filled.svg";  // 찬 하트
-        const checkIcon = "{{url_for('static', filename='img/main_img/info.svg')}}"; // 토스트용 체크
-
-        // 1. 페이지 시작 시 상태 불러오기
-        window.addEventListener('DOMContentLoaded', () => {
-            const isWished = localStorage.getItem('myWishStatus');
-            if (isWished === 'active') {
-                icon.src = imgOn;
+            // 두 조건이 다 맞아야만 보임
+            if (seasonMatch && sortMatch) {
+                item.style.display = 'block';
             } else {
-                icon.src = imgOff;
+                item.style.display = 'none';
             }
         });
+    }
 
-        // 2. 찜 토글 함수
-        function toggleWish() {
-            // 현재 저장된 상태 확인
-            const currentStatus = localStorage.getItem('myWishStatus');
+    // 처음 실행 시 필터 적용 (초기값 설정)
+    applyFilters();
 
-            if (currentStatus !== 'active') {
-                // 찜 하기
-                icon.src = imgOn;
-                localStorage.setItem('myWishStatus', 'active');
-                showImageToast(checkIcon, "찜 목록에 추가되었습니다!");
-            } else {
-                // 찜 취소
-                icon.src = imgOff;
-                localStorage.setItem('myWishStatus', 'inactive');
-                showImageToast(checkIcon, "찜이 취소되었습니다.");
-            }
+    // 화면 밖 클릭 시 닫기
+    window.onclick = function (e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-content').forEach(m => m.classList.remove('show'));
         }
+    }
 
-        // 3. 이미지 포함 토스트 표시 함수
-        function showImageToast(imgSrc, message) {
-            toastImg.src = imgSrc;
-            toastText.innerText = message;
+    function copyLink() {
+        // 1. 복사하고 싶은 주소를 여기에 입력하세요.
+        const urlToCopy = "https://www.your-link.com";
 
-            // 애니메이션 초기화 후 재생
+        // 2. 클립보드로 복사 실행
+        navigator.clipboard.writeText(urlToCopy).then(() => {
+            // 3. 복사 성공 시 토스트 알림 표시
+            const toast = document.getElementById("toast");
             toast.className = "show";
-            setTimeout(() => { toast.className = ""; }, 3000);
+
+            // 3초 후 토스트 숨기기
+            setTimeout(() => {
+                toast.className = toast.className.replace("show", "");
+            }, 3000);
+        }).catch(err => {
+            console.error("복사 실패:", err);
+        });
+    }
+
+    const icon = document.getElementById("wishIcon");
+    const toast = document.getElementById("toast1");
+    const toastImg = document.getElementById("toast1Img");
+    const toastText = document.getElementById("toast1Text");
+
+    // 이미지 경로 설정
+    const imgOff = "https://assets.coupangplay.com/assets/icons/icon-heart-outlined.svg"; // 빈 하트
+    const imgOn = "https://assets.coupangplay.com/assets/icons/icon-heart-filled.svg";  // 찬 하트
+    const checkIcon = "{{url_for('static', filename='img/main_img/info.svg')}}"; // 토스트용 체크
+
+    // 1. 페이지 시작 시 상태 불러오기
+    window.addEventListener('DOMContentLoaded', () => {
+        const isWished = localStorage.getItem('myWishStatus');
+        if (isWished === 'active') {
+            icon.src = imgOn;
+        } else {
+            icon.src = imgOff;
+        }
+    });
+
+    // 2. 찜 토글 함수
+    function toggleWish() {
+        // 현재 저장된 상태 확인
+        const currentStatus = localStorage.getItem('myWishStatus');
+
+        if (currentStatus !== 'active') {
+            // 찜 하기
+            icon.src = imgOn;
+            localStorage.setItem('myWishStatus', 'active');
+            showImageToast(checkIcon, "찜 목록에 추가되었습니다!");
+        } else {
+            // 찜 취소
+            icon.src = imgOff;
+            localStorage.setItem('myWishStatus', 'inactive');
+            showImageToast(checkIcon, "찜이 취소되었습니다.");
+        }
+    }
+
+    // 3. 이미지 포함 토스트 표시 함수
+    function showImageToast(imgSrc, message) {
+        toastImg.src = imgSrc;
+        toastText.innerText = message;
+
+        // 애니메이션 초기화 후 재생
+        toast.className = "show";
+        setTimeout(() => { toast.className = ""; }, 3000);
+    }
+
+    const stars = document.querySelectorAll('.comments .star');
+    let currentRating = 0;
+
+    stars.forEach((star) => {
+        // 1. 마우스를 올렸을 때 (Hover)
+        star.addEventListener('mouseenter', () => {
+            const hoverValue = star.getAttribute('data-value');
+            updateStarDisplay(hoverValue, 'hover');
+        });
+
+        // 2. 마우스가 나갔을 때 (Mouseleave)
+        star.addEventListener('mouseleave', () => {
+            // 호버 효과를 지우고, 클릭해서 고정된 점수(currentRating)로 복원
+            updateStarDisplay(currentRating, 'fill');
+        });
+
+        // 3. 클릭했을 때 (Click)
+        star.addEventListener('click', () => {
+            currentRating = star.getAttribute('data-value');
+            updateStarDisplay(currentRating, 'fill');
+            console.log(`선택한 평점: ${currentRating}점`);
+        });
+    });
+
+    function updateStarDisplay(targetValue, className) {
+        stars.forEach((s) => {
+            const starValue = s.getAttribute('data-value');
+
+            // 일단 모든 특수 클래스 제거
+            s.classList.remove('fill', 'hover');
+
+            // 목표 수치보다 작거나 같으면 클래스 추가
+            if (starValue <= targetValue) {
+                s.classList.add(className);
+            }
+        });
+    }
+
+    const star = document.querySelectorAll('.comments .star');
+    const container = document.querySelector('.comments');
+
+    let fixedRating = 0; // 클릭으로 고정된 점수
+
+    stars.forEach((star) => {
+        // 마우스 이동 시 (호버)
+        star.addEventListener('mousemove', (e) => {
+            // 클릭해서 고정된 상태면 호버 반응 중단
+
+            const rect = star.getBoundingClientRect();
+            const x = e.clientX - rect.left; // 별 영역 내 마우스 X 좌표
+            const value = parseFloat(star.getAttribute('data-value'));
+
+            // 0.5점 단위 계산: 별 폭의 절반보다 작으면 0.5점 차감
+            const isHalf = x < rect.width / 2;
+            const tempRating = isHalf ? value - 0.5 : value;
+
+            renderStars(tempRating);
+        });
+
+        // 클릭 시 (고정)
+        star.addEventListener('click', (e) => {
+            const rect = star.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const isHalf = x < rect.width / 2;
+            const value = parseFloat(star.getAttribute('data-value'));
+
+            fixedRating = isHalf ? value - 0.5 : value;
+            renderStars(fixedRating);
+            console.log("확정 점수:", fixedRating);
+        });
+    });
+
+    // 마우스가 영역을 벗어날 때
+    container.addEventListener('mouseleave', () => {
+        // 클릭된 게 없으면 초기화(0), 있으면 고정된 점수 유지
+        renderStars(fixedRating);
+    });
+
+    /**
+     * 별점 표시 핵심 함수
+     */
+    function renderStars(rating) {
+        stars.forEach((star) => {
+            const starValue = parseFloat(star.getAttribute('data-value'));
+
+            // 모든 상태 초기화
+            star.classList.remove('fill', 'half');
+
+            if (starValue <= rating) {
+                // 꽉 찬 별 (현재 별 값이 타겟 점수보다 작거나 같으면)
+                star.classList.add('fill');
+            } else if (starValue - 0.5 === rating) {
+                // 반쪽 별 (현재 별 값에서 0.5를 뺀 게 타겟 점수와 같으면)
+                star.classList.add('half');
+            }
+        });
+    }
+
+    // 1. 좋아요/싫어요 함수 (전역 유지)
+    window.handleLike = function (btn) {
+        const span = btn.querySelector('span');
+        span.innerText = parseInt(span.innerText) + 1;
+    };
+
+    window.handleDislike = function (btn) {
+        const span = btn.querySelector('span');
+        span.innerText = parseInt(span.innerText) + 1;
+    };
+
+    // [추가] 닉네임을 가져오는 함수
+    // 나중에 로그인 정보를 여기서 가져오도록 수정하면 됩니다.
+    function getNickname() {
+        // 예: return "{{ session['nickname'] }}"; // Flask 연동 시
+        return "방문자"; // 우선은 테스트용으로 고정값 반환
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitBtn = document.getElementById('submit-btn');
+        const commentInput = document.getElementById('comment-text');
+        const commentList = document.getElementById('comment-list');
+
+        loadComments();
+
+        if (!submitBtn || !commentInput || !commentList) {
+            console.error("HTML 요소를 찾을 수 없습니다. ID를 확인하세요.");
+            return;
         }
 
-    </script>
+        // 별점 이미지 생성 함수
+        function createStarHtml(rating) {
+            let starHtml = '<div class="comment-star-wrap">';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) starHtml += '<span class="comment-star fill"></span>';
+                else if (i - 0.5 === rating) starHtml += '<span class="comment-star half"></span>';
+                else starHtml += '<span class="comment-star"></span>';
+            }
+            starHtml += `<span class="rating-num"></span></div>`;
+            return starHtml;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-</body>
+        // 댓글을 화면에 추가하는 함수
+        function addCommentToDOM(data) {
+            const newItem = document.createElement('div');
+            newItem.className = 'comment-item';
 
-</html>
+            newItem.innerHTML = `
+            <div class="comment-header">
+                <span class="comment-nickname">${data.nickname}</span>
+                <span class="comment-date">${data.date}</span>
+            </div>
+            <div class="comment-rating">${createStarHtml(data.rating)}</div>
+            <div class="comment-content">${data.content}</div>
+            <div class="comment-actions">
+                <button type="button" class="btn-action1" onclick="handleLike(this)"><img src="{{url_for('static', filename='img/main_img/icon-thumbs-up-v2.svg')}}" alt="thumb-up"> <span>0</span></button>
+                <button type="button" class="btn-action2" onclick="handleDislike(this)"><img src="{{url_for('static', filename='img/main_img/icon-thumbs-down-v2.svg')}}" alt="thumb-down"> </button>
+            </div>
+        `;
+            commentList.prepend(newItem);
+        }
+
+        // 로컬 스토리지 저장 및 로드 로직
+        function saveComment(data) {
+            const reviews = JSON.parse(localStorage.getItem('my_reviews')) || [];
+            reviews.push(data);
+            localStorage.setItem('my_reviews', JSON.stringify(reviews));
+        }
+
+        function loadComments() {
+            const reviews = JSON.parse(localStorage.getItem('my_reviews')) || [];
+            reviews.forEach(data => addCommentToDOM(data));
+        }
+
+        // 등록 버튼 클릭 이벤트
+        submitBtn.onclick = function () {
+            const text = commentInput.value.trim();
+
+            // [수정] 함수를 호출하여 현재 닉네임을 가져옴
+            const currentNickname = getNickname();
+
+            if (typeof fixedRating === 'undefined' || fixedRating === 0) {
+                alert("별점을 선택해주세요!"); return;
+            }
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+
+            const dateString = `${year}.${month}.${day}`;
+
+            const commentData = {
+                nickname: currentNickname, // 함수에서 가져온 값 사용
+                date: dateString,
+                rating: fixedRating,
+                content: text
+            };
+
+            addCommentToDOM(commentData);
+            saveComment(commentData);
+
+            commentInput.value = "";
+            fixedRating = 0;
+            if (typeof renderStars === 'function') renderStars(0);
+        };
+    });
+</script>
+{% endblock %}
