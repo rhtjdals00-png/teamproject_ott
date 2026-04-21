@@ -1,10 +1,11 @@
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, redirect, render_template, url_for, session
 
 bp=Blueprint('home',__name__,url_prefix='/')
 
 @bp.route('/')
 def index():
-    # 127.0.0.1:5000/ 접속 시 바로 templates/main/home.html을 보여줍니다.
+    if session.get('user'):   # 🔥 로그인 상태 체크
+        return redirect(url_for('home.main'))
     return render_template('main/home.html')
 
 @bp.route('/home')

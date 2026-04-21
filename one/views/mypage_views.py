@@ -10,6 +10,7 @@ import json # 상단에 추가
 from one.models import User, Support, SupportAnswer, Plan, Subscription, Payment
 from one import db
 import base64  # 토스 API 인증용
+from one.forms import UserCreateForm
 
 
 
@@ -38,16 +39,28 @@ def change_info():
     user_unique_id = session.get('user')
     user_data = User.query.get_or_404(user_unique_id)
 
+    form = UserCreateForm()
+
+    if request.method == 'GET' and user_data.user_birth:
+        form.birth_year.data = str(user_data.user_birth.year)
+        form.birth_month.data = str(user_data.user_birth.month)
+        form.birth_day.data = str(user_data.user_birth.day)
+
     # 1. 소셜 유저 필수 정보 확인 (GET 요청 시)
     if user_data.signup_method in ['naver', 'kakao'] and request.method == 'GET':
         if not user_data.user_name or not user_data.user_phone:
-            return render_template('mypage/mypage_integrate.html', user=user_data)
+            return render_template('mypage/mypage_integrate.html', user=user_data,form=form)
+
 
     if request.method == 'POST':
         # --- 공통 정보 수집 ---
         new_name = request.form.get('user_name')
         new_phone = request.form.get('user_phone')
-        new_birth = request.form.get('user_birth')
+
+        year = request.form.get('birth_year')
+        month = request.form.get('birth_month')
+        day = request.form.get('birth_day')
+
         new_password = request.form.get('user_password')
 
         # 2. 비밀번호 처리 (신규 등록 또는 변경)
@@ -58,8 +71,10 @@ def change_info():
         # 3. 일반 정보 업데이트
         user_data.user_name = new_name
         user_data.user_phone = new_phone
-        if new_birth:
-            user_data.user_birth = datetime.strptime(new_birth, '%Y-%m-%d')
+        if year and month and day:
+            user_data.user_birth = datetime(
+                int(year), int(month), int(day)
+            )
 
         try:
             db.session.commit()
@@ -69,7 +84,7 @@ def change_info():
             db.session.rollback()
             flash('저장 중 오류가 발생했습니다.', 'danger')
 
-    return render_template('mypage/mypage_change.html', user=user_data)
+    return render_template('mypage/mypage_change.html', user=user_data,form=form)
 
 
 @bp.route('/support/write', methods=['GET', 'POST'])

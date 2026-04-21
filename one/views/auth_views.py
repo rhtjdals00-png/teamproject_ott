@@ -77,7 +77,8 @@ def naver_callback():
     db.session.commit()
 
     session['user'] = user.user_unique_id
-    return redirect(url_for('home.home'))
+    flash("로그인 완료", "success")
+    return redirect(url_for('home.main'))
 
 
 @bp.route('/auth/kakao/login')
@@ -146,7 +147,8 @@ def kakao_callback():
     session['user'] = user.user_unique_id
     session['kakao_token'] = access_token
 
-    return redirect(url_for('home.index'))
+    flash("로그인 완료", "success")
+    return redirect(url_for('home.main'))
 
 
 @bp.route('/signup', methods=['GET', 'POST'])
@@ -226,13 +228,24 @@ def login():
 
 @bp.route('/logout')
 def logout():
-    access_token = session.get('kakao_token')
-
-    if access_token:
+    # 카카오 로그아웃
+    kakao_token = session.get('kakao_token')
+    if kakao_token:
         requests.post(
             "https://kapi.kakao.com/v1/user/logout",
-            headers={"Authorization": f"Bearer {access_token}"}
+            headers={"Authorization": f"Bearer {kakao_token}"}
         )
+
+    # 네이버 로그아웃
+    naver_token = session.get('naver_token')
+    if naver_token:
+        requests.get("https://nid.naver.com/oauth2.0/token", params={
+            "grant_type": "delete",
+            "client_id": NAVER_CLIENT_ID,
+            "client_secret": NAVER_CLIENT_SECRET,
+            "access_token": naver_token,
+            "service_provider": "NAVER"
+        })
 
     session.clear()
     flash("로그아웃되었습니다.", "success")

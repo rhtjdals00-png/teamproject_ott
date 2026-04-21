@@ -13,7 +13,7 @@
 <div class="mypage-wrapper">
     <div class="top-action-wrapper">
         <div class="right-actions">
-            <a href="{{ url_for('mypage.change_info') }}" class="actionbtn"><span>회원정보 수정</span></a>
+            <a href="{{ url_for('mypage.change_info') }}" class="actionbtn edit-profile-btn"><span>회원정보 수정</span></a>
             <a href="{{ url_for('mypage.support_write') }}" class="actionbtn"><span>문의하기</span></a>
             <a href="{{ url_for('mypage.subscribe') }}" class="actionbtn primary"><span>이용권 구매</span></a>
         </div>
@@ -171,28 +171,64 @@
 </div>
 {% endblock %}
 
-
-
-
 {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-const btn = document.querySelectorAll('.mypage_btn')[0];
-if(btn){
-    btn.classList.replace('mypage_btn', 'btn-chk')
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-document.querySelectorAll('.tab-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const target = button.getAttribute('data-target');
+    // ✅ 회원정보 수정 버튼 (팝업)
+    const editBtn = document.querySelector('.edit-profile-btn');
 
-        // 1. 모든 버튼에서 active 제거 후 클릭한 버튼에 추가
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    console.log('버튼 확인:', editBtn); // 🔥 디버깅용
 
-        // 2. 모든 섹션 숨긴 후 타겟 섹션만 표시
-        document.querySelectorAll('.tab-section').forEach(section => section.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
+    if (editBtn) {
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '계정 통합을 진행할까요?',
+                text: '회원정보 수정을 위해 계정 통합이 필요합니다.',
+                icon: null,
+                width: '360px',
+                background: '#343a40',
+                color: '#fff',
+
+                showCancelButton: true,
+                confirmButtonColor: '#ff4d4f',
+                cancelButtonColor: '#6c757d',
+
+                confirmButtonText: '네',
+                cancelButtonText: '취소',
+
+                customClass: {
+                popup: 'swal-popup-custom',
+                confirmButton: 'swal-confirm-btn',
+                cancelButton: 'swal-cancel-btn'
+                },
+                buttonsStyling: false
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = editBtn.href;
+                }
+            });
+        });
+    }
+
+    // ✅ 탭 기능
+    document.querySelectorAll('.tab-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const target = button.dataset.target;
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            document.querySelectorAll('.tab-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+        });
     });
+
 });
 </script>
 {% endblock %}
