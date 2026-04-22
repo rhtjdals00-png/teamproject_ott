@@ -391,7 +391,6 @@ def content_delete(content_id):
     flash('콘텐츠가 삭제되었습니다.')
     return redirect(url_for('admin.content_list'))
 
-
 # ================= 공지사항 관리 =================
 @bp.route('/notices')
 def notice_list():
