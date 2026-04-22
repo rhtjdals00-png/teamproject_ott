@@ -209,8 +209,6 @@ def login():
         email = form.email.data
         password = form.password.data
 
-
-
         admin = Admin.query.filter_by(admin_id=email).first()
 
         if admin and check_password_hash(admin.admin_password, password):
