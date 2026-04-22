@@ -1,5 +1,5 @@
 
-from flask import Blueprint, redirect, render_template, url_for, session
+from flask import Blueprint, redirect, render_template, url_for, session, flash
 from ..models import Video, Plan
 
 bp = Blueprint('home', __name__, url_prefix='/')
@@ -30,19 +30,37 @@ def main():
 
 @bp.route('/movie')
 def movie():
-    return render_template('main/movie.html')
+    movie_data = Video.query.filter(Video.video_genres.like('%영화%')).all()
+    return render_template('main/movie.html', video_list=movie_data)
 
 @bp.route('/drama')
 def drama():
-    # DB에서 드라마 데이터만 가져오기 (예시)
-    return render_template('main/drama.html')
+    drama_data = Video.query.filter(Video.video_genres.like('%드라마%')).all()
+    return render_template('main/drama.html', video_list=drama_data)
 
 @bp.route('/entertainment')
 def entertainment():
-    return render_template('main/entertainment.html')
+    entertainment_data = Video.query.filter(Video.video_genres.like('%예능%')).all()
+    return render_template('main/entertainment.html', video_list=entertainment_data)
 
 @bp.route('/anime')
 def anime():
-    return render_template('main/anime.html')
+    # 1. DB에서 애니메이션 장르만 가져오거나 전체를 가져옵니다.
+    # 만약 모델에 video_genres 필드가 있다면 아래처럼 필터링 가능합니다.
+    anime_data = Video.query.filter(Video.video_genres.like('%애니%')).all()
+    # 전달할 때 이름을 anime_videos로 지정!
+    return render_template('main/anime.html', video_list=anime_data)
+
+
+@bp.route('/support_check')
+def support_check():
+    # 1. 세션에 유저 정보가 있는지 확인
+    if session.get('user'):
+        # 2. 로그인 상태면 고객센터 페이지로 (mypage 블루프린트의 support_center 함수)
+        return redirect(url_for('mypage.support_center'))
+    else:
+        # 3. 로그인 안 되어 있으면 로그인 페이지로 (auth 블루프린트의 login 함수)
+        flash("로그인이 필요한 서비스입니다.", "info")
+        return redirect(url_for('auth.login'))
 
 
