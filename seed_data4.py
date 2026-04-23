@@ -141,12 +141,17 @@ def seed_data():
     ]
 
     try:
+        ids = [item["id"] for item in video_data]
+        if len(ids) != len(set(ids)):
+            print("중복 id가 있습니다. seed_data의 id를 먼저 수정하세요.")
+            return
+
         for item in video_data:
-            # 1. 이미 DB에 해당 영화가 있는지 ID로 찾습니다.
             existing_video = Video.query.filter_by(video_unique_id=item["id"]).first()
 
+            is_movie = 1 if "영화" in item["genre"] else 0
+
             if existing_video:
-                # 2. 이미 있다면, 상세 정보만 업데이트 (Thumbnail, URL은 수정 안 함)
                 existing_video.video_title = item["title"]
                 existing_video.video_director = item["director"]
                 existing_video.video_actor = item["actor"]
@@ -154,9 +159,10 @@ def seed_data():
                 existing_video.video_date = item["date"]
                 existing_video.video_synopsis = item["desc"]
                 existing_video.video_genres = item["genre"]
+                existing_video.video_is_movie = is_movie
                 print(f"   - [{item['title']}] 정보 업데이트 완료")
+
             else:
-                # 3. DB에 없다면 새로 생성 (이때만 기본 경로 사용)
                 new_v = Video(
                     video_unique_id=item["id"],
                     video_title=item["title"],
@@ -166,14 +172,14 @@ def seed_data():
                     video_date=item["date"],
                     video_synopsis=item["desc"],
                     video_genres=item["genre"],
-                    
+                    video_is_movie=is_movie,
                     video_url=f"/static/uploads/videos/video_{item['id'] % 2}.mp4",
                     video_thumbnail=f"/static/uploads/thumbnails/{item['id']}.jpg",
                     admin_unique_id=1
                 )
                 db.session.add(new_v)
                 print(f"   - [{item['title']}] 새로 추가됨")
-        
+
         db.session.commit()
         print("✅ 업데이트가 완료되었습니다!")
 
