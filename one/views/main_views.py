@@ -1,9 +1,17 @@
-
-from flask import Blueprint, redirect, render_template, url_for, session, flash
+from flask import Blueprint, redirect, render_template, url_for, session, flash, request
 from ..models import Video, Plan, User, db
 import random
 
 bp=Blueprint('home',__name__,url_prefix='/')
+@bp.before_request
+def require_login():
+    # 홈(랜딩) 페이지는 허용
+    if request.endpoint in ['home.index', 'home.home']:
+        return
+
+    if not session.get('user'):
+        flash("로그인이 필요합니다.", "error")
+        return redirect(url_for('auth.login'))
 
 @bp.route('/')
 def index():
