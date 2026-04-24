@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for, session, flash, request
-from ..models import Video, Plan, User, db
+from ..models import Video, Plan, User, db, Notice
 import random
 
 bp=Blueprint('home',__name__,url_prefix='/')
